@@ -12,75 +12,68 @@ gsap.ticker.add(time => {
 document.body.appendChild(app.view);
 
 const sleep = (waitSeconds) => {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve();
-		}, waitSeconds * 1000)
-	})	
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, waitSeconds * 1000)
+  })
 };
 
 const loadStage = (x, y, texture) => {
-    const spr = PIXI.Sprite.from(texture);
-    spr.scale.set(0.0625, 0.0625);
-    spr.position.set(x, y);
-    app.stage.addChildAt(spr, 0);
+  const spr = PIXI.Sprite.from(texture);
+  spr.scale.set(0.0625, 0.0625);
+  spr.position.set(x, y);
+  app.stage.addChildAt(spr, 0);
 };
 
 // 実験のためキャッシュバスターを使用
 const manifest = {
-    "bundles":[
-       {
-          "name":"init",
-          "assets":[
-            {
-                "name":"loading",
-                "srcs":"assets/loading.png"
-            }
-          ]
-       },
-       {
-          "name":"firstLevelStages",
-          "assets":[
-            {
-                "name":"stage01",
-                "srcs":"assets/01_oaktarn.png?" + Date()
-            },
-            {
-                "name":"stage02",
-                "srcs":"assets/02_silverbark.png?" + Date()
-            },
-            {
-                "name":"stage03",
-                "srcs":"assets/03_winsilner.png?" + Date()
-            }
-            ]
-       },
-       {
-          "name":"secondLevelStages",
-          "assets":[
-            {
-                "name":"stage04",
-                "srcs":"assets/04_hotstump.png?" + Date()
-            },
-            {
-                "name":"stage05",
-                "srcs":"assets/05_kilspirise.png?" + Date()
-             },
-             {
-                "name":"stage06",
-                "srcs":"assets/06_ponhayes.png?" + Date()
-             }             
-          ]
-       }
-    ]
- };
+  "bundles": [
+    // 基本課題：initバンドルを追加してください。
+    {
+      "name": "firstLevelStages",
+      "assets": [
+        {
+          "name": "stage01",
+          "srcs": "assets/01_oaktarn.png?" + Date()
+        },
+        {
+          "name": "stage02",
+          "srcs": "assets/02_silverbark.png?" + Date()
+        },
+        {
+          "name": "stage03",
+          "srcs": "assets/03_winsilner.png?" + Date()
+        }
+      ]
+    },
+    {
+      "name": "secondLevelStages",
+      "assets": [
+        {
+          "name": "stage04",
+          "srcs": "assets/04_hotstump.png?" + Date()
+        },
+        {
+          "name": "stage05",
+          "srcs": "assets/05_kilspirise.png?" + Date()
+        },
+        {
+          "name": "stage06",
+          "srcs": "assets/06_ponhayes.png?" + Date()
+        }
+      ]
+    }
+  ]
+};
 
 // マニフェストのロード
 await PIXI.Assets.init({ manifest });
 // backgroundLoadBundleでロードするバンドルが2つ以上の場合は配列
 // バンドルが1つの場合は PIXI.Assets.backgroundLoadBundle('firstLevelStages');
-// PIXI.Assets.backgroundLoadBundle(['init', 'firstLevelStages', 'secondLevelStages']);
+PIXI.Assets.backgroundLoadBundle(['init', 'firstLevelStages', 'secondLevelStages']);
 
+/*
 const init = await PIXI.Assets.loadBundle('init');
 const loading = PIXI.Sprite.from(init.loading);
 loading.anchor.set(0.5, 0.5);
