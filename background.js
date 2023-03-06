@@ -83,17 +83,24 @@ loading.visible = false;
 app.stage.addChild(loading); 
 
 const tl = gsap.timeline();
-tl.to(loading, { pause: true, duration: 1, repeat: -1, ease: 'none', pixi: { rotation: 360 } });
 
+// 基本課題：duration, repeat, ease,  pixi プロパティを追加してください。
+tl.to(loading, { pause: true, });
+*/
 const startLoading = async () => {   
+  /*
     tl.play();
     loading.visible = true;
+  */
 };
 
 const stopLoading = async () => {
+  /*
     tl.pause();
     loading.visible = false;
+  */
 };
+
 
 const loadFirstLevel = async () => {
   // バンドルのロード
