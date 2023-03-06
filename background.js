@@ -79,7 +79,7 @@ const manifest = {
 await PIXI.Assets.init({ manifest });
 // backgroundLoadBundleでロードするバンドルが2つ以上の場合は配列
 // バンドルが1つの場合は PIXI.Assets.backgroundLoadBundle('firstLevelStages');
-// PIXI.Assets.backgroundLoadBundle(['init', 'firstLevelStages', 'secondLevelStages']);
+PIXI.Assets.backgroundLoadBundle(['init', 'firstLevelStages', 'secondLevelStages']);
 
 const init = await PIXI.Assets.loadBundle('init');
 const loading = PIXI.Sprite.from(init.loading);
