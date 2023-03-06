@@ -1,6 +1,14 @@
 import * as PIXI from 'pixi.js'
+import { gsap } from "gsap";
+import { PixiPlugin } from "gsap/PixiPlugin";
+gsap.registerPlugin(PixiPlugin);
+PixiPlugin.registerPIXI(PIXI);
 
-const app = new PIXI.Application({ width: 512, height: 768 });
+const app = new PIXI.Application({ width: 512, height: 768, backgroundColor: 0xffffff });
+app.ticker.stop();
+gsap.ticker.add(time => {
+  app.ticker.update();
+});
 document.body.appendChild(app.view);
 
 const sleep = (waitSeconds) => {
@@ -15,12 +23,21 @@ const loadStage = (x, y, texture) => {
     const spr = PIXI.Sprite.from(texture);
     spr.scale.set(0.0625, 0.0625);
     spr.position.set(x, y);
-    app.stage.addChild(spr);
+    app.stage.addChildAt(spr, 0);
 };
 
 // 実験のためキャッシュバスターを使用
 const manifest = {
     "bundles":[
+       {
+          "name":"init",
+          "assets":[
+            {
+                "name":"loading",
+                "srcs":"assets/loading.png"
+            }
+          ]
+       },
        {
           "name":"firstLevelStages",
           "assets":[
@@ -62,9 +79,31 @@ const manifest = {
 await PIXI.Assets.init({ manifest });
 // backgroundLoadBundleでロードするバンドルが2つ以上の場合は配列
 // バンドルが1つの場合は PIXI.Assets.backgroundLoadBundle('firstLevelStages');
-PIXI.Assets.backgroundLoadBundle(['firstLevelStages', 'secondLevelStages']);
+// PIXI.Assets.backgroundLoadBundle(['init', 'firstLevelStages', 'secondLevelStages']);
+
+const init = await PIXI.Assets.loadBundle('init');
+const loading = PIXI.Sprite.from(init.loading);
+loading.anchor.set(0.5, 0.5);
+loading.position.set(256, 384);
+loading.alpha = 0.5;
+loading.visible = false;
+app.stage.addChild(loading); 
+
+const tl = gsap.timeline();
+tl.to(loading, { pause: true, duration: 1, repeat: -1, ease: 'none', pixi: { rotation: 360 } });
+
+const startLoading = async () => {   
+    tl.play();
+    loading.visible = true;
+};
+
+const stopLoading = async () => {
+    tl.pause();
+    loading.visible = false;
+};
 
 const loadFirstLevel = async () => {
+    startLoading();
     const startTime = performance.now(); // 開始時間(ms)
     // バンドルのロード
     const firstLevelStages = await PIXI.Assets.loadBundle('firstLevelStages');    
@@ -73,9 +112,11 @@ const loadFirstLevel = async () => {
     loadStage(0, 512, firstLevelStages.stage03);   
     const endTime = performance.now(); // 終了時間
     document.getElementById('bench1').innerText = endTime - startTime;
+    stopLoading();
 };
 
 const loadSecondLevel = async () => {
+    startLoading();
     const startTime = performance.now(); // 開始時間(ms)
     // バンドルのロード
     const secondLevelStages = await PIXI.Assets.loadBundle('secondLevelStages');
@@ -84,11 +125,13 @@ const loadSecondLevel = async () => {
     loadStage(256, 512, secondLevelStages.stage06);
     const endTime = performance.now(); // 終了時間
     document.getElementById('bench2').innerText = endTime - startTime;
+    stopLoading();
 };
 
 await loadFirstLevel();
-document.getElementById('nextLevel').addEventListener('click', () => {
-    loadSecondLevel();
+
+document.getElementById('nextLevel').addEventListener('click', async () => {
+    await loadSecondLevel();
 });
 
 
