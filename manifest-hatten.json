@@ -1,0 +1,47 @@
+{
+  "bundles": [
+    {
+      "name": "character",
+      "assets": [
+        {
+          "name": "spritesheet",
+          "srcs": "assets/spritesheet.json"
+        }
+      ]
+    },
+    {
+      "name": "level01",
+      "assets": [
+        {
+          "name": "stage01",
+          "srcs": "assets/01_oaktarn.png"
+        },
+        {
+          "name": "stage02",
+          "srcs": "assets/02_silverbark.png"
+        },
+        {
+          "name": "stage03",
+          "srcs": "assets/03_winsilner.png"
+        }
+      ]
+    },
+    {
+      "name": "level02",
+      "assets": [
+        {
+          "name": "stage04",
+          "srcs": "assets/04_hotstump.png"
+        },
+        {
+          "name": "stage05",
+          "srcs": "assets/05_kilspirise.png"
+        },
+        {
+          "name": "stage06",
+          "srcs": "assets/06_ponhayes.png"
+        }
+      ]
+    }
+  ]
+}
