@@ -90,19 +90,30 @@ window.addEventListener("keyup", () => {
 
 app.ticker.add(() => {
   switch (currentMove) {
-    case 'walkLeft': piyo.x -= 4; break;
-    case 'walkRight': piyo.x += 4; break;
-    case 'walkUp': piyo.y -= 4; break;
-    case 'walkDown': piyo.y += 4; break;
+    case 'walkLeft': piyo.x -= 7; break;
+    case 'walkRight': piyo.x += 7; break;
+    case 'walkUp': piyo.y -= 7; break;
+    case 'walkDown': piyo.y += 7; break;
     default: break;
   }
   if (piyo.x > app.view.width) {
-    piyo.x = -piyo.width;
     currentStage++;
     if (currentStage >= manifest.bundles[currentLevel + stageOffset].assets.length) {
       currentStage = 0;
       currentLevel++;
     }
+    if (currentLevel >= manifest.bundles.length - stageOffset) {
+      alert("Game over!");
+      currentMove = '';
+      // 最後のステージへ戻す
+      currentLevel--;
+      currentStage = manifest.bundles[currentLevel + stageOffset].assets.length-1;
+      piyo.x = app.view.width - piyo.width;
+      return;
+    }    
+    piyo.x = -piyo.width;
+    gotoNextStage();
+  }
     if (currentLevel >= manifest.bundles.length - stageOffset) {
       alert("Game over!");
     }
