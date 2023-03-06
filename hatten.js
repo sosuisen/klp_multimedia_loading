@@ -114,13 +114,28 @@ app.ticker.add(() => {
     piyo.x = -piyo.width;
     gotoNextStage();
   }
-    if (currentLevel >= manifest.bundles.length - stageOffset) {
-      alert("Game over!");
+  else if (piyo.x < - piyo.width) {
+    currentStage--;
+    // ステージが0未満になったら前のレベルへ戻る
+    if (currentStage < 0){      
+      if (currentLevel > 0) {
+        currentLevel--;
+        currentStage = manifest.bundles[currentLevel + stageOffset].assets.length - 1;
+        piyo.x = app.view.width - piyo.width;
+      }
+      else {
+        // 最初のレベルの最初のステージの場合
+        currentStage = 0;
+        piyo.x = -piyo.width; // 左端で止める。
+        return;
+      }
     }
     else {
-      gotoNextStage();
+      piyo.x = app.view.width - piyo.width;
     }
+    gotoNextStage();
   }
+
 });
 
 // ステージのロード
