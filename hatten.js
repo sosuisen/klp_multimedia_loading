@@ -114,13 +114,6 @@ app.ticker.add(() => {
     piyo.x = -piyo.width;
     gotoNextStage();
   }
-    if (currentLevel >= manifest.bundles.length - stageOffset) {
-      alert("Game over!");
-    }
-    else {
-      gotoNextStage();
-    }
-  }
 });
 
 // ステージのロード
