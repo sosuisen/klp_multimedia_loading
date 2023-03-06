@@ -103,47 +103,33 @@ const stopLoading = async () => {
 };
 
 const loadFirstLevel = async () => {
-    startLoading();
-    const startTime = performance.now(); // 開始時間(ms)
-    // バンドルのロード
-    const firstLevelStages = await PIXI.Assets.loadBundle('firstLevelStages');    
-    loadStage(0, 0, firstLevelStages.stage01);
-    loadStage(0, 256, firstLevelStages.stage02);
-    loadStage(0, 512, firstLevelStages.stage03);   
-    const endTime = performance.now(); // 終了時間
-    document.getElementById('bench1').innerText = endTime - startTime;
-    stopLoading();
+  // バンドルのロード
+  const firstLevelStages = await PIXI.Assets.loadBundle('firstLevelStages');
+  loadStage(0, 0, firstLevelStages.stage01);
+  loadStage(0, 256, firstLevelStages.stage02);
+  loadStage(0, 512, firstLevelStages.stage03);
 };
 
 const loadSecondLevel = async () => {
-    startLoading();
-    const startTime = performance.now(); // 開始時間(ms)
-    // バンドルのロード
-    const secondLevelStages = await PIXI.Assets.loadBundle('secondLevelStages');
-    loadStage(256, 0, secondLevelStages.stage04);
-    loadStage(256, 256, secondLevelStages.stage05);
-    loadStage(256, 512, secondLevelStages.stage06);
-    const endTime = performance.now(); // 終了時間
-    document.getElementById('bench2').innerText = endTime - startTime;
-    stopLoading();
+  // バンドルのロード
+  const secondLevelStages = await PIXI.Assets.loadBundle('secondLevelStages');
+  loadStage(256, 0, secondLevelStages.stage04);
+  loadStage(256, 256, secondLevelStages.stage05);
+  loadStage(256, 512, secondLevelStages.stage06);
 };
 
+startLoading();
+const startTime = performance.now(); // 開始時間(ms)
 await loadFirstLevel();
+const endTime = performance.now(); // 終了時間
+document.getElementById('bench1').innerText = endTime - startTime;
+stopLoading();
 
 document.getElementById('nextLevel').addEventListener('click', async () => {
-    await loadSecondLevel();
+  const startTime = performance.now(); // 開始時間(ms)
+  startLoading();
+  await loadSecondLevel();
+  stopLoading();
+  const endTime = performance.now(); // 終了時間
+  document.getElementById('bench2').innerText = endTime - startTime;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
