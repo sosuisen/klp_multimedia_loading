@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>非同期処理の練習</title>
+</head>
+<body style="background-color: #c0c0c0;">
+  <h1 style="color: #606060">バックグラウンドローディングの練習</h1>
+  <p>
+    6枚の地図画像は<a href="https://watabou.itch.io/village-generator">Village Generator</a>で生成。<br>
+    サイズは1枚につき、4095x4095px（1枚につき4MB程度の画像）。
+  </p>
+  <button id="nextLevel">残りの地図を表示</button><br>
+  FirstLevelのロード所要時間(ms)：<span id="bench1"></span><br>
+  SecondLevelのロード所要時間(ms)：<span id="bench2"></span><br>
+  <script type="module" src="background.js"></script>
+</body>
+</html>
