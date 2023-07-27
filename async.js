@@ -4,14 +4,14 @@ const app = new PIXI.Application({ width: 512, height: 768 });
 document.body.appendChild(app.view);
 
 /**
- * 以下、動作説明のためファイル名の後ろに '?' + Date() を付けているので、
+ * 以下、動作説明のためファイル名の後ろに '?' + Date.now() を付けているので、
  * 実際のアプリでは必要がなければ外すこと。
  */
 
 const errorCase = () => {
     // Assets.loadは非同期処理のため、
     // アセットがロード完了していない状態で次へ進む
-    const texture = PIXI.Assets.load('assets/01_oaktarn.png' + '?' + Date());
+    const texture = PIXI.Assets.load('assets/01_oaktarn.png' + '?' + Date.now());
     // アセット（texture）がロードされていないためエラー。
     const spr = PIXI.Sprite.from(texture);
     spr.scale.set(0.0625, 0.0625);
@@ -22,7 +22,7 @@ const errorCase = () => {
 const syncCase = async () => {
     // awaitを用いると同期処理になる。
     // 続く処理をアセットのロードが完了するまでブロックする
-    const texture = await PIXI.Assets.load('assets/01_oaktarn.png' + '?' + Date());
+    const texture = await PIXI.Assets.load('assets/01_oaktarn.png' + '?' + Date.now());
     // アセットのロードが完了したら以下を処理
     const spr = PIXI.Sprite.from(texture);
     spr.scale.set(0.0625, 0.0625);
@@ -33,7 +33,7 @@ const asyncCase = () => {
     // 非同期処理の場合はこう書く。
     // 続く処理をブロックしない。
     // ロードが完了したらthen()が実行される。
-    PIXI.Assets.load('assets/02_silverbark.png' + '?' + Date()).then(texture => {
+    PIXI.Assets.load('assets/02_silverbark.png' + '?' + Date.now()).then(texture => {
         // アセットのロードが完了したら以下を処理
         const spr = PIXI.Sprite.from(texture);
         spr.scale.set(0.0625, 0.0625);
@@ -48,8 +48,8 @@ const asyncCase = () => {
 const bundleCase = async () => {
     // 複数ファイルをバンドルにセット
     PIXI.Assets.addBundle('maps', {
-        'stage03': 'assets/03_winsilner.png' + '?' + Date(),
-        'stage04': 'assets/04_hotstump.png' + '?' + Date(),
+        'stage03': 'assets/03_winsilner.png' + '?' + Date.now(),
+        'stage04': 'assets/04_hotstump.png' + '?' + Date.now(),
     });
     // バンドル内のアセットが同時に読み込まれるのを待つ。
     const maps = await PIXI.Assets.loadBundle('maps');
