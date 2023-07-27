@@ -7,7 +7,7 @@ PixiPlugin.registerPIXI(PIXI);
 const app = new PIXI.Application({ width: 512, height: 768, backgroundColor: 0xffffff });
 app.ticker.stop();
 gsap.ticker.add(time => {
-  app.ticker.update();
+  app.ticker.upDate.now();
 });
 document.body.appendChild(app.view);
 
@@ -35,15 +35,15 @@ const manifest = {
       "assets": [
         {
           "name": "stage01",
-          "srcs": "assets/01_oaktarn.png?" + Date()
+          "srcs": "assets/01_oaktarn.png?" + Date.now()
         },
         {
           "name": "stage02",
-          "srcs": "assets/02_silverbark.png?" + Date()
+          "srcs": "assets/02_silverbark.png?" + Date.now()
         },
         {
           "name": "stage03",
-          "srcs": "assets/03_winsilner.png?" + Date()
+          "srcs": "assets/03_winsilner.png?" + Date.now()
         }
       ]
     },
@@ -52,15 +52,15 @@ const manifest = {
       "assets": [
         {
           "name": "stage04",
-          "srcs": "assets/04_hotstump.png?" + Date()
+          "srcs": "assets/04_hotstump.png?" + Date.now()
         },
         {
           "name": "stage05",
-          "srcs": "assets/05_kilspirise.png?" + Date()
+          "srcs": "assets/05_kilspirise.png?" + Date.now()
         },
         {
           "name": "stage06",
-          "srcs": "assets/06_ponhayes.png?" + Date()
+          "srcs": "assets/06_ponhayes.png?" + Date.now()
         }
       ]
     }
