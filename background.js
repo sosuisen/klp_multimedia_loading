@@ -7,7 +7,7 @@ PixiPlugin.registerPIXI(PIXI);
 const app = new PIXI.Application({ width: 512, height: 768, backgroundColor: 0xffffff });
 app.ticker.stop();
 gsap.ticker.add(time => {
-  app.ticker.upDate.now();
+  app.ticker.update();
 });
 document.body.appendChild(app.view);
 
