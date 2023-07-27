@@ -21,7 +21,7 @@ const loadImage = (x, y, fileName, useCache) => {
         spr = PIXI.Sprite.from(fileName);
     }
     else {
-        spr = PIXI.Sprite.from(fileName + '?' + Date());
+        spr = PIXI.Sprite.from(fileName + '?' + Date.now());
     }
     spr.scale.set(0.0625, 0.0625);
     spr.position.set(x, y);
